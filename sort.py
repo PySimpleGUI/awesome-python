@@ -22,11 +22,7 @@ def sort_blocks():
     table_of_contents = ''.join(read_me.split('- - -')[0])
     blocks = ''.join(read_me.split('- - -')[1]).split('\n# ')
     for i in range(len(blocks)):
-        if i == 0:
-            blocks[i] = blocks[i] + '\n'
-        else:
-            blocks[i] = '# ' + blocks[i] + '\n'
-
+        blocks[i] = blocks[i] + '\n' if i == 0 else '# ' + blocks[i] + '\n'
     # Sorting the libraries
     inner_blocks = sorted(blocks[0].split('##'))
     for i in range(1, len(inner_blocks)):
@@ -56,7 +52,7 @@ def main():
         s_line = line.lstrip()
         indent = len(line) - len(s_line)
 
-        if any([s_line.startswith(s) for s in ['* [', '- [']]):
+        if any(s_line.startswith(s) for s in ['* [', '- [']):
             if indent == last_indent:
                 blocks[-1].append(line)
             else:
